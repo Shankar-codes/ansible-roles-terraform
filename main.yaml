@@ -1,6 +1,6 @@
 - name: "create {{ component }}" #mongodb, redis. user
   hosts: "{{ component }}" #mongodb.ellamma.fun, redis.ellamma.fun
-  connection: local
+ # connection: local
   become: yes #sudo user or root user
   roles:
   - "{{ component }}" #picks the components for roles folder
