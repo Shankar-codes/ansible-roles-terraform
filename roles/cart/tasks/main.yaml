@@ -1,0 +1,19 @@
+- name: run nodejs install setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: nodejs.yaml
+
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app_setup.yaml
+
+# install the npm dependencies
+- name: install the npm dependencies
+  community.general.npm:
+    path: /app
+
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: system-setup.yaml

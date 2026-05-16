@@ -1,0 +1,15 @@
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app_setup.yaml
+
+- name: app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: python.yaml
+
+# copy payment service file
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: system-setup.yaml

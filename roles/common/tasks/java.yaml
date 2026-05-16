@@ -1,0 +1,20 @@
+#install maven and mysql
+- name: install maven
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+  - maven
+  - mysql
+
+# install maven dependencies
+- name: install maven dependencies
+  ansible.builtin.command: mvn clean package
+  args:
+    chdir: /app
+
+# move jar file
+- name: move the jar file
+  ansible.builtin.command: mv target/{{ component }}-1.0.jar {{ component }}.jar 
+  args:
+    chdir: /app

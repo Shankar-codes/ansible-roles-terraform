@@ -1,0 +1,43 @@
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app_setup.yaml
+
+- name: run nodejs install setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: nodejs.yaml
+
+#install npm dependencies
+- name: install npm dependencies
+  community.general.npm:
+    name: catalogue
+    path: /app
+
+#copy mongo repo file
+- name: copy mongo repo file
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+#install mongosh client
+- name: install mongosh client
+  ansible.builtin.package:
+    name: mongodb-mongosh
+    state: present
+
+#connect to mongodb and create catalogue database
+- name: connect to mongodb and create catalogue database
+  ansible.builtin.command: mongosh mongodb.ellamma.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
+  register: catalogue_output
+
+#load products into mongodb
+- name: load products into mongodb
+  ansible.builtin.shell: mongosh --host mongodb.ellamma.fun </app/db/master-data.js
+  when: catalogue_output.stdout | int < 0
+
+#catalogue service daemon reload
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: system-setup.yaml

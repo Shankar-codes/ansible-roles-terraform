@@ -1,0 +1,55 @@
+#create ec2 instance using ansible
+- name: create ec2 instance using ansible
+  hosts: localhost
+  connection: local
+  vars:
+    image_id: ami-0220d79f3f480ecf5
+    zone_id: "Z00405822WO8HCQACP58A"
+    sg_id: sg-020b146d0d1696186
+    domain_name: ellamma.fun
+
+  #creating e2 instances and R53 records for each instance  
+  tasks:
+    #create ec2 instance
+    - name: create ec2 instance
+      amazon.aws.ec2_instance:
+        name: "{{ item }}"
+        image_id: "{{ image_id }}"
+        security_group: "{{ sg_id }}"
+        instance_type: t3.micro
+        tags:
+          name: "{{ item }}"
+      loop: "{{ instance }}"
+      register: ec2_output  
+
+    - name: print the output
+      ansible.builtin.debug:
+        msg: "{{ ec2_output }}"
+
+
+    #create R53 record for each instance with private IP address
+    - name: create R53 record
+      amazon.aws.route53:
+        state: present
+        zone: "{{ domain_name }}"
+        record: "{{ item.item }}.{{ domain_name }}"
+        type: A
+        ttl: 1
+        #private IP address for all instances except frontend
+        value: "{{ item.instances[0].private_ip_address }}"
+        overwrite: true
+      loop: "{{ ec2_output.results }}"
+
+    #create R53 record for when instance name is frontend with public IP address
+    - name: create R53 record
+      amazon.aws.route53:
+        state: present
+        zone: "{{ domain_name }}"
+        record: "{{ domain_name }}"
+        type: A
+        ttl: 1
+        #public IP address for frontend instance
+        value: "{{ item.instances[0].public_ip_address }}" 
+        overwrite: true
+      loop: "{{ ec2_output.results }}"
+      when: item.item == "frontend"

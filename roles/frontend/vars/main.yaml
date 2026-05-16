@@ -1,0 +1,5 @@
+CATALOGUE_HOST: catalogue.ellamma.fun
+USER_HOST: user.ellamma.fun
+CART_HOST: cart.ellamma.fun
+SHIPPING_HOST: shipping.ellamma.fun
+PAYMENT_HOST: payment.ellamma.fun
