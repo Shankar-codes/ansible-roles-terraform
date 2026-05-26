@@ -1,3 +1,3 @@
-CART_HOST: cart.ellamma.fun
-USER_HOST: user.ellamma.fun
-RABBITMQ_HOST: rabbitmq.ellamma.fun
+CART_HOST: cart.backend-alb-dev-ellamma.fun
+USER_HOST: user.backend-alb-dev-ellamma.fun
+RABBITMQ_HOST: rabbitmq.backend-alb-dev-ellamma.fun

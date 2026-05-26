@@ -1,2 +1,2 @@
-CART_HOST: cart.ellamma.fun
-MYSQL_HOST: mysql.ellamma.fun
+CART_HOST: cart.backend-alb-dev-ellamma.fun
+MYSQL_HOST: mysql.backend-alb-dev-ellamma.fun

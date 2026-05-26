@@ -1,2 +1,2 @@
-MONGODB_HOST: mongodb.ellamma.fun
-REDIS_HOST: redis.ellamma.fun
+MONGODB_HOST: mongodb.backend-alb-dev-ellamma.fun
+REDIS_HOST: redis.backend-alb-dev-ellamma.fun
