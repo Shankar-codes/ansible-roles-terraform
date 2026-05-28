@@ -1,5 +1,5 @@
-CATALOGUE_HOST: catalogue.backend-alb-dev-ellamma.fun
-USER_HOST: user.backend-alb-dev-ellamma.fun
-CART_HOST: cart.backend-alb-dev-ellamma.fun
-SHIPPING_HOST: shipping.backend-alb-dev-ellamma.fun
-PAYMENT_HOST: payment.backend-alb-dev-ellamma.fun
+CATALOGUE_HOST: catalogue.backend-alb-dev.ellamma.fun
+USER_HOST: user.backend-alb-dev.ellamma.fun
+CART_HOST: cart.backend-alb-dev.ellamma.fun
+SHIPPING_HOST: shipping.backend-alb-dev.ellamma.fun
+PAYMENT_HOST: payment.backend-alb-dev.ellamma.fun
