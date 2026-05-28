@@ -1,2 +1,2 @@
 CATALOGUE_HOST: catalogue.backend-alb-dev.ellamma.fun
-REDIS_HOST: redis.backend-alb-dev.ellamma.fun
+REDIS_HOST: redis.ellamma.fun
