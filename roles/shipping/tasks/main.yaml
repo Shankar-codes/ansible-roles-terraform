@@ -1,0 +1,38 @@
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app_setup.yaml
+    
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: java.yaml
+
+# install mysql python libraries
+- name: install mysql python libraries
+  ansible.builtin.pip:
+    executable: pip
+    name: "{{ item }}"
+  loop:
+  - cryptography
+  - PyMySQL
+
+# import shipping data into mysql
+- name: import shipping data into mysql
+  community.mysql.mysql_db:
+    name: all
+    state: import
+    login_host: mysql.ellamma.fun
+    login_user: root
+    login_password: RoboShop@1
+    target: "{{ item }}"
+  loop:
+  - /app/db/schema.sql
+  - /app/db/app-user.sql
+  - /app/db/master-data.sql
+
+# shipping service daemon-reload, enable, start
+- name: run app setup
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: system-setup.yaml
